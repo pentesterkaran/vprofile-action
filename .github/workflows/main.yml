@@ -10,51 +10,50 @@ env:
   EKS_CLUSTER: boiCluster
 
 jobs:
-  # Testing:
-  #   runs-on: ubuntu-latest
-  #   steps:
-      # - name: Code checkout
-      #   uses: actions/checkout@v6
+  Testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v6
       
-      # - name: Maven test
-      #   run: mvn test
+      - name: Maven test
+        run: mvn test
       
-      # - name: Checkstyle
-      #   run: mvn checkstyle:checkstyle
+      - name: Checkstyle
+        run: mvn checkstyle:checkstyle
       
-      # ## Setup java 11 to be default (sonar-scanner requirement as of 5.x)
-      # - name: Set java 11
-      #   uses: actions/setup-java@v5
-      #   with:
-      #    distribution: 'temurin' # See 'Supported distributions' for available options
-      #    java-version: '17'
-      #   env:
-      #     FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      ## Setup java 11 to be default (sonar-scanner requirement as of 5.x)
+      - name: Set java 11
+        uses: actions/setup-java@v5
+        with:
+         distribution: 'temurin' # See 'Supported distributions' for available options
+         java-version: '11'
+        
 
-      # #setup sonar scanner
-      # - name: Setup Sonarqube
-      #   uses: SylvainDumas/setup-sonar-scanner@v1
+      #setup sonar scanner
+      - name: Setup Sonarqube
+        uses: SylvainDumas/setup-sonar-scanner@v1
       
-      # - name: Run Sonar scanner
-      #   run: sonar-scanner
-      #      -Dsonar.host.url=${{ secrets.SONAR_URL }}
-      #      -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      #      -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
-      #      -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-      #      -Dsonar.sources=src/
-      #      -Dsonar.junit.reportsPath=target/surefire-reports/ 
-      #      -Dsonar.jacoco.reportsPath=target/jacoco.exec 
-      #      -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml
-      #     #  -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/
+      - name: Run Sonar scanner
+        run: sonar-scanner
+           -Dsonar.host.url=${{ secrets.SONAR_URL }}
+           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+           -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
+           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+           -Dsonar.sources=src/
+           -Dsonar.junit.reportsPath=target/surefire-reports/ 
+           -Dsonar.jacoco.reportsPath=target/jacoco.exec 
+           -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml
+           -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/
       
-      # # Check the Quality Gate status.
-      # - name: SonarQube Quality Gate check
-      #   id: sonarqube-quality-gate-check
-      #   uses: sonarsource/sonarqube-quality-gate-action@master
-      #   # Force to fail step after specific time.
-      #   timeout-minutes: 5
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      # Check the Quality Gate status.
+      - name: SonarQube Quality Gate check
+        id: sonarqube-quality-gate-check
+        uses: sonarsource/sonarqube-quality-gate-action@master
+        # Force to fail step after specific time.
+        timeout-minutes: 1
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   Build_and_Publish:
     # needs: Testing
