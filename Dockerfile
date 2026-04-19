@@ -1,5 +1,5 @@
 FROM amazoncorretto:11 AS BUILD_IMAGE
-RUN yum update && yum install maven -y
+RUN yum update -y && yum install maven -y
 COPY ./ vprofile-project
 RUN cd vprofile-project &&  mvn install 
 
