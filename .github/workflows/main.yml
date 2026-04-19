@@ -91,7 +91,7 @@ jobs:
             -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml \
             -Dsonar.java.binaries=target/test-classes/
 
-      # Quality Gate Check (IMPORTANT)#
+      # Quality Gate Check (IMPORTANT)
       - name: SonarQube Quality Gate check
         uses: sonarsource/sonarqube-quality-gate-action@v1.1.0
         timeout-minutes: 5
