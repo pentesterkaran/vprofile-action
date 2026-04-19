@@ -24,14 +24,14 @@ jobs:
       
       ## Setup java 11 to be default (sonar-scanner requirement as of 5.x)
       - name: Set java 11
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v6
         with:
          distribution: 'temurin' # See 'Supported distributions' for available options
          java-version: '11'
 
       #setup sonar scanner
       - name: Setup Sonarqube
-        uses: warchant/setup-sonar-scanner@v7
+        uses: SylvainDumas/setup-sonar-scanner@v1
       
       - name: Run Sonar scanner
         run: sonar-scanner
